@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.IconButton
-import com.example.todolist.TodoItem
+import com.example.todolist.dto.TodoItem
 
 @Composable
 fun TodoItemView(
