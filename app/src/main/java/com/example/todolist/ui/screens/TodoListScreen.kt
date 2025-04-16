@@ -26,11 +26,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.todolist.dto.TodoItem
 import com.example.todolist.ui.components.AddTaskInput
+import com.example.todolist.ui.components.EditTaskModal
 import com.example.todolist.ui.components.TodoItemView
 
 @Composable
 fun TodoListScreen(navController: NavController) {
     var todoList by remember { mutableStateOf(listOf<TodoItem>()) }
+
+    var editingItem by remember { mutableStateOf<TodoItem?>(null) }
+    var editedText by remember { mutableStateOf("") }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -80,10 +84,27 @@ fun TodoListScreen(navController: NavController) {
                         },
                         onDelete = {
                             todoList = todoList.filter { it.id != item.id }
+                        },
+                        onEdit = {
+                            editingItem = item
+                            editedText = item.text
                         }
                     )
                 }
             }
+        }
+
+        editingItem?.let { item ->
+            EditTaskModal(
+                currentText = item.text,
+                onDismiss = { editingItem = null },
+                onConfirm = { updatedText ->
+                    todoList = todoList.map {
+                        if (it.id == item.id) it.copy(text = updatedText) else it
+                    }
+                    editingItem = null
+                }
+            )
         }
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.IconButton
 import com.example.todolist.dto.TodoItem
 
@@ -18,7 +19,8 @@ import com.example.todolist.dto.TodoItem
 fun TodoItemView(
     todo: TodoItem,
     onCheckedChange: (Boolean) -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onEdit: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -40,6 +42,10 @@ fun TodoItemView(
             color = if (todo.isDone) Color.Gray else Color.White,
             textDecoration = if (todo.isDone) TextDecoration.LineThrough else TextDecoration.None
         )
+
+        IconButton(onClick = onEdit) {
+            Icon(imageVector = Icons.Default.Edit, contentDescription = "Editar tarefa")
+        }
 
         IconButton(onClick = onDelete) {
             Icon(
